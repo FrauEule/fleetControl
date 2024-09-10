@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fleet Control demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="./assets/css/style.css" rel="stylesheet">
+    <style>
+        /* Hide the options by default */
+        #sortSelect option {
+            display: none;
+            /* Hide options by default */
+        }
+
+        /* Show options when the select is focused */
+        #sortSelect:focus option {
+            display: block;
+            /* Show options when the select is focused */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-4">
+        <h1 class="headfleet">Fleet Control</h1>
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control small-form-control" placeholder="Search">
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="no-border"></th>
+                        <th>Loco Number</th>
+                        <th>Operator <br></th>
+                        <th>Actual Mileage</th>
+                        <th>
+                            Next Inspection
+
+                        </th>
+                        <th>Last Inspection</th>
+                        <th>Ultrasonic</th>
+                        <th>Train Control</th>
+                        <th>Br.1.2</th>
+                        <th>Loco Notes / <br> Service Requests</th>
+                        <th>ECM 3 Comments</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <th class="no-border"></th>
+                        <th>
+                            <input type="text" id="filterLocoNumber" placeholder="Filter" class="form-control"
+                                data-id="1" onkeyup="filterTable(this)">
+                        </th>
+
+                        <th>
+                            <input type="text" id="filterOperator" data-id="2" placeholder="Filter "
+                                class="form-control" onkeyup="filterTable(this)">
+                        </th>
+                        <th><select id="sortSelect3"
+                                class="form-select form-select-sm sortSelect sortSelectoptionhide sortSelectfocusing custom-select::after"
+                                onchange="sortTable(this)" data-id="3" data-type="text"
+                                style="display: inline; width: 0.5px;">
+                                <option value="ascending">▼</option>
+                                <option value="descending">▲</option>
+                            </select></th>
+                        <th><select id="sortSelect4"
+                                class="form-select form-select-sm sortSelect sortSelectoptionhide sortSelectfocusing custom-select::after"
+                                onchange="sortTable(this)" data-id="4" data-type="date"
+                                style="display: inline; width: 0.5px;">
+                                <option value="earliest">▼</option>
+                                <option value="latest">▲</option>
+                            </select></th>
+                        <th><select id="sortSelect5"
+                                class="form-select form-select-sm sortSelect sortSelectoptionhide sortSelectfocusing custom-select::after"
+                                onchange="sortTable(this)" data-id="5" data-type="date"
+                                style="display: inline; width: 0.5px;">
+                                <option value="earliest">▼</option>
+                                <option value="latest">▲</option>
+                            </select></th>
+                        <th><select id="sortSelect6"
+                                class="form-select form-select-sm sortSelect sortSelectoptionhide sortSelectfocusing custom-select::after"
+                                onchange="sortTable(this)" data-id="6" data-type="text"
+                                style="display: inline; width: 0.5px;">
+                                <option value="ascending">▼</option>
+                                <option value="descending">▲</option>
+                            </select></th>
+                        <th><select id="sortSelect7"
+                                class="form-select form-select-sm sortSelect sortSelectoptionhide sortSelectfocusing custom-select::after"
+                                onchange="sortTable(this)" data-id="7" data-type="text"
+                                style="display: inline; width: 0.5px;">
+                                <option value="ascending">▼</option>
+                                <option value="descending">▲</option>
+                            </select></th>
+
+                        <th><select id="sortSelect8"
+                                class="form-select form-select-sm sortSelect sortSelectoptionhide sortSelectfocusing custom-select::after"
+                                onchange="sortTable(this)" data-id="8" data-type="date"
+                                style="display: inline; width: 0.5px;">
+                                <option value="earliest">▼</option>
+                                <option value="latest">▲</option>
+                            </select></th>
+
+                        <th><input type="text" id="filterBr12" placeholder="Filter " class="form-control"
+                                onkeyup="filterTable(this)" data-id="9"></th>
+
+                        <th><input type="text" id="filterNotes" data-id="9" placeholder="Filter " class="form-control"
+                                onkeyup="filterTable(this)"></th>
+
+
+                        <th><input type="text" id="filterComments" data-id="10" placeholder="Filter "
+                                class="form-control" onkeyup="filterTable(this)"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="no-border" style="padding-left: 20px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green"
+                                class="bi bi-train-front-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.621.515C8.647.02 7.353.02 5.38.515c-.924.23-1.982.766-2.78 1.22C1.566 2.322 1 3.432 1 4.582V13.5A2.5 2.5 0 0 0 3.5 16h9a2.5 2.5 0 0 0 2.5-2.5V4.583c0-1.15-.565-2.26-1.6-2.849-.797-.453-1.855-.988-2.779-1.22ZM6.5 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m-2 2h7A1.5 1.5 0 0 1 13 5.5v2A1.5 1.5 0 0 1 11.5 9h-7A1.5 1.5 0 0 1 3 7.5v-2A1.5 1.5 0 0 1 4.5 4m.5 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0m8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3-1a1 1 0 1 1 0 2 1 1 0 0 1 0-2M4 5.5a.5.5 0 0 1 .5-.5h3v3h-3a.5.5 0 0 1-.5-.5zM8.5 8V5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z" />
+                            </svg>
+                        </td>
+                        <td>Loco 111-111</td>
+                        <td>Deutsche Bahn</td>
+                        <td>150KM</td>
+                        <td>12.10.2024</td>
+                        <td>12.10.2025</td>
+                        <td>126000KM <br> 12.10.2023</td>
+                        <td>01.12.2023 <br> De / N / CH</td>
+                        <td>02.10.2023</td>
+                        <td>Waiting</td>
+                        <td>Bla</td>
+                        <td><!-- Actions Icon Here --></td>
+                    </tr>
+                    <tr>
+                        <td class="no-border" style="padding-left: 20px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow"
+                                class="bi bi-train-front-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.621.515C8.647.02 7.353.02 5.38.515c-.924.23-1.982.766-2.78 1.22C1.566 2.322 1 3.432 1 4.582V13.5A2.5 2.5 0 0 0 3.5 16h9a2.5 2.5 0 0 0 2.5-2.5V4.583c0-1.15-.565-2.26-1.6-2.849-.797-.453-1.855-.988-2.779-1.22ZM6.5 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m-2 2h7A1.5 1.5 0 0 1 13 5.5v2A1.5 1.5 0 0 1 11.5 9h-7A1.5 1.5 0 0 1 3 7.5v-2A1.5 1.5 0 0 1 4.5 4m.5 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0m8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3-1a1 1 0 1 1 0 2 1 1 0 0 1 0-2M4 5.5a.5.5 0 0 1 .5-.5h3v3h-3a.5.5 0 0 1-.5-.5zM8.5 8V5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z" />
+                            </svg>
+                        </td>
+                        <td>Loco 222-222</td>
+                        <td>Italian Bahn</td>
+                        <td>200KM</td>
+                        <td>15.11.2024</td>
+                        <td>15.11.2025</td>
+                        <td>130000KM <br> 15.11.2023</td>
+                        <td>01.12.2022 <br> DE / N / CH</td>
+                        <td>03.10.2023</td>
+                        <td>OK</td>
+                        <td>Bla</td>
+                        <td><!-- Actions Icon Here --></td>
+                    </tr>
+
+                    <tr>
+                        <td class="no-border" style="padding-left: 20px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="orange"
+                                class="bi bi-train-front-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.621.515C8.647.02 7.353.02 5.38.515c-.924.23-1.982.766-2.78 1.22C1.566 2.322 1 3.432 1 4.582V13.5A2.5 2.5 0 0 0 3.5 16h9a2.5 2.5 0 0 0 2.5-2.5V4.583c0-1.15-.565-2.26-1.6-2.849-.797-.453-1.855-.988-2.779-1.22ZM6.5 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m-2 2h7A1.5 1.5 0 0 1 13 5.5v2A1.5 1.5 0 0 1 11.5 9h-7A1.5 1.5 0 0 1 3 7.5v-2A1.5 1.5 0 0 1 4.5 4m.5 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0m8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3-1a1 1 0 1 1 0 2 1 1 0 0 1 0-2M4 5.5a.5.5 0 0 1 .5-.5h3v3h-3a.5.5 0 0 1-.5-.5zM8.5 8V5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z" />
+                            </svg>
+                        </td>
+                        <td>Loco 444-444</td>
+                        <td>Swiss Bahn</td>
+                        <td>300KM</td>
+                        <td>25.01.2025</td>
+                        <td>25.01.2026</td>
+                        <td>150000KM <br> 25.01.2024</td>
+                        <td>01.10.2023 <br> DE / N / CH</td>
+                        <td>05.10.2023</td>
+                        <td>Attention</td>
+                        <td>Bla</td>
+                        <td><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red"
+                                class="bi bi-paperclip" viewBox="0 0 16 16">
+                                <path
+                                    d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0z" />
+                            </svg></td>
+                    </tr>
+                    <tr>
+                        <td class="no-border" style="padding-left: 20px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red"
+                                class="bi bi-train-front-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.621.515C8.647.02 7.353.02 5.38.515c-.924.23-1.982.766-2.78 1.22C1.566 2.322 1 3.432 1 4.582V13.5A2.5 2.5 0 0 0 3.5 16h9a2.5 2.5 0 0 0 2.5-2.5V4.583c0-1.15-.565-2.26-1.6-2.849-.797-.453-1.855-.988-2.779-1.22ZM6.5 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m-2 2h7A1.5 1.5 0 0 1 13 5.5v2A1.5 1.5 0 0 1 11.5 9h-7A1.5 1.5 0 0 1 3 7.5v-2A1.5 1.5 0 0 1 4.5 4m.5 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0m8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3-1a1 1 0 1 1 0 2 1 1 0 0 1 0-2M4 5.5a.5.5 0 0 1 .5-.5h3v3h-3a.5.5 0 0 1-.5-.5zM8.5 8V5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z" />
+                            </svg>
+                        </td>
+                        <td>Loco 444-444</td>
+                        <td>Deutsche Bahn</td>
+                        <td>300KM</td>
+                        <td>25.01.2025</td>
+                        <td>25.01.2026</td>
+                        <td>150000KM <br> 25.01.2024</td>
+                        <td>01.06.2023 <br> DE / N / CH</td>
+                        <td>05.10.2023</td>
+                        <td>Checked</td>
+                        <td>Bla</td>
+                        <td><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red"
+                                class="bi bi-paperclip" viewBox="0 0 16 16">
+                                <path
+                                    d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0z" />
+                            </svg></td>
+                    </tr>
+
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
