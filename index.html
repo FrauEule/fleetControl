@@ -228,7 +228,31 @@
     } catch (error) {
         console.error('Error:', error);
     }
+
+    //
+    const baseURL = "https://diginergynfr.kissflow.eu";
+    const accountId = replace this with your ACCOUNT_ID;
+    const formId =  replace this with your  FORM_ID;
+    const response = await fetch(
+      `${baseURL}/form/2/${accountId}/${formId}/list?page_size=100`,
+      {
+        method: "GET",
+        headers: {
+          "X-Access-Key-Id": "abc" // change your ACCESS_KEY_ID,
+          "X-Access-Key-Secret": "abc" // change your ACCESS_KEY_SECRET,
+          accept: "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+        console.log("here is the result from kissflow api", result )
 })();
+
+
     
   </script>
 
