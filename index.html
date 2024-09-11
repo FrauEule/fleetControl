@@ -218,11 +218,18 @@
         crossorigin="anonymous"></script>
     <script src="./assets/js/script.js"></script>
      <script>
-    let url = "https://api.restful-api.dev/objects"
+    (async () => {
+    let url = "https://api.restful-api.dev/objects";
 
-    const response = await fetch(url)
-    const result = await response.json();
-    console.log(result)     
+    try {
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log(result);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+})();
+    
   </script>
 
 </body>
